@@ -51,3 +51,22 @@ if(ENABLE_TESTS)
   enable_testing()
   add_subdirectory(test)
 endif()
+
+export(TARGETS ${PROJECT_NAME}
+  NAMESPACE pmt:: FILE cmake/${PROJECT_NAME}Config.cmake)
+export(PACKAGE ${PROJECT_NAME})
+
+include(GNUInstallDirs)
+install(TARGETS ${PROJECT_NAME}
+  EXPORT ${PROJECT_NAME}Targets
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  BUNDLE  DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(DIRECTORY include DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(cmake/${PROJECT_NAME}ConfigVersion.cmake
+  VERSION ${PROJECT_VERSION}
+  COMPATIBILITY AnyNewerVersion)
+
