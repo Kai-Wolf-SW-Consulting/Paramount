@@ -26,6 +26,7 @@ set(SOURCES
   src/base/logging.cc
   src/base/logging.h
   src/base/macros.h
+  src/base/scope_guard.h
   src/base/status.cc
   src/base/status.h
   src/base/string_util.h

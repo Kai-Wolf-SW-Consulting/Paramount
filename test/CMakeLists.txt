@@ -3,14 +3,15 @@
 # found in the LICENSE file in the top directory.
 
 set(TEST_SOURCES
-  paramount_test.cc
   base/array_copy_test.cc
   base/array_size_test.cc
   base/callback_test.cc
   base/environment_test.cc
   base/for_each_argument_test.cc
   base/rw_protected_test.cc
+  base/scope_guard_test.cc
   base/unique_copy_test.cc
+  paramount_test.cc
 )
 
 set(TEST_EXE_NAME ${PROJECT_NAME}_test)
