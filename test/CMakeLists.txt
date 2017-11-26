@@ -7,7 +7,7 @@ set(TEST_SOURCES
   base/array_size_test.cc
   base/callback_test.cc
   $<$<NOT:$<PLATFORM_ID:Windows>>:base/environment_test.cc>
-  base/for_each_argument_test.cc
+  $<$<NOT:$<PLATFORM_ID:Windows>>:base/for_each_argument_test.cc>
   base/rw_protected_test.cc
   base/scope_guard_test.cc
   paramount_test.cc

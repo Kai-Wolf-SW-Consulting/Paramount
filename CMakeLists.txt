@@ -17,15 +17,21 @@ add_subdirectory(thirdparty)
 set(SOURCES
   src/base/array_copy.h
   src/base/array_size.h
+  src/base/callback.h
+  src/base/callback_impl.h
+  src/base/callback_types.h
   src/base/check.h
   src/base/cmdline_flags.cc
   src/base/cmdline_flags.h
   $<$<NOT:$<PLATFORM_ID:Windows>>:src/base/environment.cc>
   $<$<NOT:$<PLATFORM_ID:Windows>>:src/base/environment.h>
+  $<$<NOT:$<PLATFORM_ID:Windows>>:src/base/for_each_argument.h>
+  src/base/generate_callback_impl.py
   src/base/integral_types.h
   src/base/logging.cc
   src/base/logging.h
   src/base/macros.h
+  src/base/rw_protected.h
   src/base/scope_guard.h
   src/base/status.cc
   src/base/status.h
