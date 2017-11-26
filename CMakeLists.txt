@@ -20,8 +20,8 @@ set(SOURCES
   src/base/check.h
   src/base/cmdline_flags.cc
   src/base/cmdline_flags.h
-  src/base/environment.cc
-  src/base/environment.h
+  $<$<NOT:$<PLATFORM_ID:Windows>>:src/base/environment.cc>
+  $<$<NOT:$<PLATFORM_ID:Windows>>:src/base/environment.h>
   src/base/integral_types.h
   src/base/logging.cc
   src/base/logging.h
