@@ -2,7 +2,7 @@
 # Use of this source code is governed by a personal license that can be
 # found in the LICENSE file in the top directory.
 
-cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.6 FATAL_ERROR)
 
 project(Paramount VERSION 0.1 LANGUAGES CXX)
 set(COMPANY    "Kai Wolf - SW Consulting")
