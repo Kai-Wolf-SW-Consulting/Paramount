@@ -10,7 +10,6 @@ set(TEST_SOURCES
   base/for_each_argument_test.cc
   base/rw_protected_test.cc
   base/scope_guard_test.cc
-  base/unique_copy_test.cc
   paramount_test.cc
 )
 
