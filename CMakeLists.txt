@@ -9,7 +9,47 @@ set(COMPANY    "Kai Wolf - SW Consulting")
 set(COPYRIGHT  "Copyright (c) 2017, Kai Wolf. All rights reserved.")
 set(IDENTIFIER "me.kai-wolf")
 
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+include(ParamountUtils)
+
 option(ENABLE_TESTS "Build with tests" ON)
+option(ENABLE_ADDRESS_SANITIZER "Build with address sanitizer" OFF)
+check_sanitize_prerequisites(ENABLE_ADDRESS_SANITIZER)
+
+option(ENABLE_THREAD_SANITIZER "Build with thread sanitizer" OFF)
+check_sanitize_prerequisites(ENABLE_THREAD_SANITIZER)
+
+option(ENABLE_UB_SANITIZER "Build with undefined behaviour sanitizer" OFF)
+check_sanitize_prerequisites(ENABLE_UB_SANITIZER)
+
+option(ENABLE_IWYU "Use include-what-you-use for checking includes" OFF)
+if(ENABLE_IWYU)
+  find_program(IWYU_EXE NAMES include-what-you-use iwyu
+    DOC "Path to include-what-you-use executable")
+  if(IWYU_EXE)
+    message(STATUS "Found include-what-you-use: ${IWYU_EXE}")
+    set(IWYU_OPTIONS
+      ${IWYU_EXE} -Xiwyu --mapping_file=${CMAKE_CURRENT_SOURCE_DIR}/iwyu.imp)
+  endif()
+endif()
+
+option(ENABLE_CLANG_TIDY "Build with clang-tidy enabled" OFF)
+if(ENABLE_CLANG_TIDY)
+  find_program(CLANG_TIDY_EXE NAMES clang-tidy
+    DOC "Path to clang-tidy executable")
+  if(CLANG_TIDY_EXE)
+    message(STATUS "Found clang-tidy: ${CLANG_TIDY_EXE}")
+  endif()
+endif()
+
+option(ENABLE_COVERAGE "Build with code coverage information" OFF)
+if(ENABLE_COVERAGE)
+  if(NOT CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR
+     NOT CMAKE_SYSTEM_NAME STREQUAL "Linux" OR
+     NOT CMAKE_BUILD_TYPE MATCHES "Debug")
+    message(WARNING "ENABLE_COVERAGE is not supported for this configuration")
+  endif()
+endif()
 
 #find_package(Boost 1.60.0 COMPONENTS filesystem system thread)
 add_subdirectory(thirdparty)
@@ -46,6 +86,39 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
   CXX_STANDARD 14
   CXX_STANDARD_REQUIRED ON
   CXX_EXTENSIONS NO)
+
+if(ENABLE_IWYU)
+  set_target_properties(${PROJECT_NAME} PROPERTIES
+    CXX_INCLUDE_WHAT_YOU_USE ${IWYU_OPTIONS})
+endif()
+
+if(ENABLE_CLANG_TIDY)
+  set_target_properties(${PROJECT_NAME} PROPERTIES
+    CXX_CLANG_TIDY ${CLANG_TIDY_EXE})
+endif()
+
+if(ENABLE_COVERAGE)
+  target_compile_options(${PROJECT_NAME} PUBLIC
+    -fprofile-arcs -ftest-coverage)
+endif()
+
+if(ENABLE_ADDRESS_SANITIZER)
+  set(_ASAN_FLAGS -fno-omit-frame-pointer -fsanitize=address)
+  target_compile_options(${PROJECT_NAME} PUBLIC ${_ASAN_FLAGS})
+  target_link_libraries(${PROJECT_NAME} PUBLIC ${_ASAN_FLAGS})
+endif()
+
+if(ENABLE_THREAD_SANITIZER)
+  set(_MSAN_FLAGS -fno-omit-frame-pointer -fsanitize=thread)
+  target_compile_options(${PROJECT_NAME} PUBLIC ${_MSAN_FLAGS})
+  target_link_libraries(${PROJECT_NAME} PUBLIC ${_MSAN_FLAGS})
+endif()
+
+if(ENABLE_UB_SANITIZER)
+  set(_UB_FLAGS -fno-omit-frame-pointer -fsanitize=undefined)
+  target_compile_options(${PROJECT_NAME} PUBLIC ${_UB_FLAGS})
+  target_link_libraries(${PROJECT_NAME} PUBLIC ${_UB_FLAGS})
+endif()
 
 target_include_directories(${PROJECT_NAME}
   PRIVATE
