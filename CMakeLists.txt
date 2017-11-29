@@ -4,7 +4,7 @@
 
 cmake_minimum_required(VERSION 3.6 FATAL_ERROR)
 
-project(Paramount VERSION 0.1 LANGUAGES CXX)
+project(Paramount VERSION 1.0 LANGUAGES CXX)
 set(COMPANY    "Kai Wolf - SW Consulting")
 set(COPYRIGHT  "Copyright (c) 2017, Kai Wolf. All rights reserved.")
 set(IDENTIFIER "me.kai-wolf")
@@ -79,6 +79,8 @@ add_library(${PROJECT_NAME} ${SOURCES})
 add_library(pmt::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
+  VERSION ${Paramount_VERSION}
+  SOVERSION ${Paramount_VERSION_MAJOR}
   LINKER_LANGUAGE CXX
   CXX_STANDARD 14
   CXX_STANDARD_REQUIRED ON
