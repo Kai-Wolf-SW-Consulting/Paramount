@@ -132,9 +132,20 @@ if(ENABLE_TESTS)
   add_subdirectory(test)
 endif()
 
-export(TARGETS ${PROJECT_NAME}
-  NAMESPACE pmt:: FILE cmake/${PROJECT_NAME}Config.cmake)
+# Export the package for use from the build tree
+export(TARGETS ${PROJECT_NAME} NAMESPACE pmt:: FILE cmake/${PROJECT_NAME}Targets.cmake)
 export(PACKAGE ${PROJECT_NAME})
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+  cmake/${PROJECT_NAME}ConfigVersion.cmake
+  VERSION ${PROJECT_VERSION}
+  COMPATIBILITY AnyNewerVersion)
+
+configure_package_config_file(
+  cmake/${PROJECT_NAME}Config.cmake.in
+  cmake/${PROJECT_NAME}Config.cmake
+  INSTALL_DESTINATION lib/cmake/)
 
 include(GNUInstallDirs)
 install(TARGETS ${PROJECT_NAME}
@@ -142,11 +153,14 @@ install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-  BUNDLE  DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(DIRECTORY include DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+  BUNDLE  DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+#install(DIRECTORY include DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-include(CMakePackageConfigHelpers)
-write_basic_package_version_file(cmake/${PROJECT_NAME}ConfigVersion.cmake
-  VERSION ${PROJECT_VERSION}
-  COMPATIBILITY AnyNewerVersion)
+install(FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}Config.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}ConfigVersion.cmake
+  DESTINATION lib/cmake/)
 
+install(EXPORT ${PROJECT_NAME}Targets
+  NAMESPACE pmt:: DESTINATION lib/cmake/)
