@@ -12,7 +12,6 @@
 using StringList = std::vector<std::string>;
 
 namespace pmt {
-namespace base {
 
 std::string Trim(const std::string& str) {
     auto first = str.find_first_not_of(' ');
@@ -32,7 +31,6 @@ StringList SplitString(const std::string& str, char delim) {
     return tokens;
 }
 
-} // namespace base
 } // namespace pmt
 
 #endif // PARAMOUNT_STRING_UTIL_H

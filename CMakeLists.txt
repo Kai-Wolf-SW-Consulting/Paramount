@@ -55,7 +55,6 @@ endif()
 add_subdirectory(thirdparty)
 
 set(SOURCES
-  src/base/array_copy.h
   src/base/array_size.h
   src/base/callback.h
   src/base/callback_impl.h
@@ -65,7 +64,6 @@ set(SOURCES
   src/base/cmdline_flags.h
   $<$<NOT:$<PLATFORM_ID:Windows>>:src/base/environment.cc>
   $<$<NOT:$<PLATFORM_ID:Windows>>:src/base/environment.h>
-  $<$<NOT:$<PLATFORM_ID:Windows>>:src/base/for_each_argument.h>
   src/base/generate_callback_impl.py
   src/base/integral_types.h
   src/base/logging.cc
@@ -75,7 +73,6 @@ set(SOURCES
   src/base/scope_guard.h
   src/base/status.cc
   src/base/status.h
-  src/base/string_util.h
 )
 
 add_library(${PROJECT_NAME} ${SOURCES})
@@ -155,7 +152,7 @@ install(TARGETS ${PROJECT_NAME}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   BUNDLE  DESTINATION ${CMAKE_INSTALL_LIBDIR}
   INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-#install(DIRECTORY include DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}Config.cmake

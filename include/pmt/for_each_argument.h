@@ -9,7 +9,6 @@
 #include <utility>
 
 namespace pmt {
-namespace base {
 
 template <class F, class... Args>
 void ForEachArgument(F f, Args &&... args) {
@@ -21,7 +20,6 @@ void ForEachArgumentInOrder(F f, Args &&... args) {
     (void) (int[]){(f(std::forward<Args>(args)), 0)...};
 }
 
-} // namespace base
 } // namespace pmt
 
 #endif // PARAMOUNT_FOR_EACH_ARGUMENT_H

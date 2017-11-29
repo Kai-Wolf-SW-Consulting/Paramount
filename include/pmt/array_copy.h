@@ -11,7 +11,6 @@
 #include <type_traits>
 
 namespace pmt {
-namespace base {
 
 template <typename T, std::size_t n>
 inline void ArrayCopy(T (&dst)[n], T (&src)[n]) {
@@ -28,7 +27,6 @@ inline void ArrayCopy(T (&dst)[m], T (&src)[n]) {
     }
 }
 
-} // namespace base
 } // namespace pmt
 
 #endif // PARAMOUNT_ARRAY_COPY_H
