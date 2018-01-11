@@ -16,11 +16,6 @@ set(TEST_SOURCES
 set(TEST_EXE_NAME ${PROJECT_NAME}_test)
 add_executable(${TEST_EXE_NAME} ${TEST_SOURCES})
 
-set_target_properties(${TEST_EXE_NAME} PROPERTIES
-  CXX_STANDARD 14
-  CXX_STANDARD_REQUIRED ON
-  CXX_EXTENSIONS NO)
-
 get_filename_component(PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
 target_include_directories(${TEST_EXE_NAME}
   PRIVATE ${PARENT_DIR}/src) # include private implementation for testing

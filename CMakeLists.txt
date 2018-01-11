@@ -9,7 +9,8 @@ set(COMPANY    "Kai Wolf - SW Consulting")
 set(COPYRIGHT  "Copyright (c) 2017, Kai Wolf. All rights reserved.")
 set(IDENTIFIER "me.kai-wolf")
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+list(APPEND CMAKE_MODULE_PATH
+  ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 include(ParamountUtils)
 
 option(ENABLE_TESTS "Build with tests" ON)
@@ -72,19 +73,13 @@ set(SOURCES
   src/base/rw_protected.h
   src/base/scope_guard.h
   src/base/status.cc
-  src/base/status.h
-)
+  src/base/status.h)
 
 add_library(${PROJECT_NAME} ${SOURCES})
 add_library(pmt::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
-set_target_properties(${PROJECT_NAME} PROPERTIES
-  VERSION ${Paramount_VERSION}
-  SOVERSION ${Paramount_VERSION_MAJOR}
-  LINKER_LANGUAGE CXX
-  CXX_STANDARD 14
-  CXX_STANDARD_REQUIRED ON
-  CXX_EXTENSIONS NO)
+target_compile_features(${PROJECT_NAME}
+  PUBLIC cxx_std_14)
 
 if(ENABLE_IWYU)
   set_target_properties(${PROJECT_NAME} PROPERTIES
