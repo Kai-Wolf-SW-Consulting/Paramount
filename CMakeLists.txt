@@ -13,7 +13,7 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 include(ParamountUtils)
 
-option(ENABLE_TESTS "Build with tests" ON)
+option(BUILD_TESTING "Build with tests" ON)
 option(ENABLE_ADDRESS_SANITIZER "Build with address sanitizer" OFF)
 check_sanitize_prerequisites(ENABLE_ADDRESS_SANITIZER)
 
@@ -52,7 +52,10 @@ if(ENABLE_COVERAGE)
   endif()
 endif()
 
-#find_package(Boost 1.60.0 COMPONENTS filesystem system thread)
+find_package(Boost 1.60.0 COMPONENTS filesystem system thread REQUIRED)
+find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
+find_package(GTest REQUIRED)
+
 add_subdirectory(thirdparty)
 
 set(SOURCES
@@ -121,7 +124,7 @@ target_include_directories(${PROJECT_NAME}
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>)
 
-if(ENABLE_TESTS)
+if(BUILD_TESTING)
   enable_testing()
   add_subdirectory(test)
 endif()
