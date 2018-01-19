@@ -52,9 +52,9 @@ if(ENABLE_COVERAGE)
   endif()
 endif()
 
-find_package(Boost 1.60.0 COMPONENTS filesystem system thread REQUIRED)
-find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
-find_package(GTest REQUIRED)
+find_package(Boost 1.60.0 EXACT REQUIRED COMPONENTS filesystem system thread)
+find_package(Qt5 5.10.0 EXACT REQUIRED COMPONENTS Core Gui Widgets)
+find_package(GTest 1.8.0 EXACT REQUIRED)
 
 add_subdirectory(thirdparty)
 
