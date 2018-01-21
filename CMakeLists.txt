@@ -124,6 +124,9 @@ target_include_directories(${PROJECT_NAME}
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>)
 
+add_executable(main src/main.cc)
+target_link_libraries(main Qt5::Widgets)
+
 if(BUILD_TESTING)
   enable_testing()
   add_subdirectory(test)
