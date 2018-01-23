@@ -125,6 +125,12 @@ target_include_directories(${PROJECT_NAME}
     $<INSTALL_INTERFACE:include>)
 
 add_executable(main src/main.cc)
+
+set_target_properties(main PROPERTIES
+  AUTOMOC ON
+  AUTOUIC ON
+  AUTORCC ON)
+
 target_link_libraries(main Qt5::Widgets)
 
 if(BUILD_TESTING)
