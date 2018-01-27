@@ -68,7 +68,6 @@ set(SOURCES
   src/base/cmdline_flags.h
   $<$<NOT:$<PLATFORM_ID:Windows>>:src/base/environment.cc>
   $<$<NOT:$<PLATFORM_ID:Windows>>:src/base/environment.h>
-  src/base/generate_callback_impl.py
   src/base/integral_types.h
   src/base/logging.cc
   src/base/logging.h
@@ -77,6 +76,10 @@ set(SOURCES
   src/base/scope_guard.h
   src/base/status.cc
   src/base/status.h)
+
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCES})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}
+  FILES ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 add_library(${PROJECT_NAME} ${SOURCES})
 add_library(pmt::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
@@ -127,9 +130,7 @@ target_include_directories(${PROJECT_NAME}
 add_executable(main src/main.cc)
 
 set_target_properties(main PROPERTIES
-  AUTOMOC ON
-  AUTOUIC ON
-  AUTORCC ON)
+  AUTOMOC ON AUTOUIC ON AUTORCC ON)
 
 target_link_libraries(main Qt5::Widgets)
 
